@@ -9,8 +9,8 @@ $pick = rand(1,5);
 
 if (in_array($guess, ['gender','breakdown'])) {
    $response->message('kubva ku api');
-} elseif ($guess == $pick) {
-   $response->message("Yes! You guessed it!");
+} elseif (in_array($guess, ['gender','breakdown'])) {
+   $response->message("kubva ku api");
 } else {
    $response->message("Correct information is critical. This service provides the official and up to date information on the status of COVID-19 in Zimbabwe from the Open Parly
    Reply with one of the words in the list below to get the correct information on the topic:  
@@ -28,3 +28,13 @@ if (in_array($guess, ['gender','breakdown'])) {
 }
 
 print $response;
+
+//fetch data from openparly api
+function requestDataAPI(){}
+
+//make data from openparly api readable
+function DecodeDataAPI(){}
+
+
+//shortList for counselling
+function counsellor(){}
