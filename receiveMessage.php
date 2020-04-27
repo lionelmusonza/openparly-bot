@@ -30,10 +30,10 @@ if (in_array($guess, ['gender','breakdown'])) {
 print $response;
 
 //fetch data from openparly api
-function requestDataAPI(){}
+function requestDataAPI($uri){}
 
 //make data from openparly api readable
-function DecodeDataAPI(){}
+function DecodeDataAPI($jsonobj){}
 
 
 //shortList for counselling
