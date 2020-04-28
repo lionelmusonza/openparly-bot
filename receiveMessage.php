@@ -46,7 +46,11 @@ if (in_array($guess, ['gender breakdown'])) {
 print $response;
 
 //fetch data from openparly api
-function requestDataAPI($uri){}
+function requestDataAPI($url){
+   $api = 'https://crnzwhack.herokuapp.com';
+   $request_url = $api. '/' . $url;
+   return $request_url;
+}
 
 //make data from openparly api readable
 function DecodeDataAPI($jsonobj){}
