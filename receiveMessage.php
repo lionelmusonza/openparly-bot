@@ -49,7 +49,8 @@ print $response;
 function requestDataAPI($url){
    $api = 'https://crnzwhack.herokuapp.com';
    $request_url = $api. '/' . $url;
-   return $request_url;
+   $response = json_decode(file_get_contents($request_url));
+   return $response;
 }
 
 //make data from openparly api readable
