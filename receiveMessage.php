@@ -80,7 +80,7 @@ function requestDataAPI($uri){
 }
 
 //make data from openparly api readable
-function DecodeDataAPI($jsonobj){}
+function DecodeDataAPI($id,$jsonobj){}
 
 
 //shortList for counselling
