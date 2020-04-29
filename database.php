@@ -7,6 +7,7 @@ $username = "nyaradzo";
 $password = "defaultnyaradzopassword";
 $dbname = "nyaradzo";
 $waNumber = getenv('MY_WHATSAPP_NUMBER');
+$chatID = rand(8000,324094230);
 
 // Create connection
 $conn = new mysqli($serverName, $username, $password, $dbname);
@@ -15,8 +16,8 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "INSERT INTO todos(phone)
-VALUES ($waNumber)";
+$sql = "INSERT INTO todos(phone,chatID)
+VALUES ($waNumber, $chatID)";
 
 if ($conn->query($sql) === TRUE) {
     echo "New record created successfully";
