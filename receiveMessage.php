@@ -158,7 +158,6 @@ function DecodeDataAPI($id,$jsonobj){
             "\nAge:" . $value->age .
             "\nGender:" . $value->gender .
             "\nCity:" . $value->city .
-            "\nAge:" . $value->age .
             "\nDate Confirmed:" . $value->dateConfirmation .
             "\nTravel History:" . $value->travelHistoryLocation;
             
