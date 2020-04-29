@@ -28,16 +28,18 @@ switch ($msg) {
        $response->message(requestDataAPI($uri));
        break;
    case 5:
-       $response->message(DecodeDataAPI(5,requestDataAPI('sexUpdate')));
+       $z = requestDataAPI('sexUpdate');
+       $x = DecodeDataAPI(5,$z);
+       $response->message($x);
        break;
    case 6:
-       $response->message(requestDataAPI('CasesProvince'));
+       $response->message(DecodeDataAPI(6,requestDataAPI('CasesProvince')));
        break;
    case 7:
-       $response->message(requestDataAPI('UpdateSummary'));
+       $response->message(DecodeDataAPI(7,requestDataAPI('UpdateSummary')));
        break;
    case 8:
-       $response->message(requestDataAPI('apicase'));
+       $response->message(DecodeDataAPI(8,requestDataAPI('apicase')));
        break;
    case 9:
        $response->message(requestDataAPI('apiday'));
@@ -107,7 +109,7 @@ function allocateCounsellor($wanum,$conn){
 
  //make data from openparly api readable
 function DecodeDataAPI($id,$jsonobj){
-   $data = json_decode($jsonobj, true);
+   
 
    switch ($id) {
    
@@ -118,49 +120,54 @@ function DecodeDataAPI($id,$jsonobj){
          # code...
          break;
       case 5:
-         $string = "Gender Breakdown of Cases:\nMales:". $data['male'] ."\nFemales:". $data['female'];
+         $string = "Gender Breakdown of Cases:\nMales:". json_decode($jsonobj)['0']->male ."\nFemales:". json_decode($jsonobj)['0']->female;
          break;
       case 6:
          $string = "COVID-19 cases at Provincial Level:
-            \nBulawayo:". $data['Bulawayo'] .
-            "\nHarare:". $data['Harare'] .
-            "\nManicaland:". $data['Manicaland'] .
-            "\nMashonaland Central:". $data['Mashonaland_Central'] .
-            "\nMashonaland East:". $data['Mashonaland_East'] .
-            "\nMashonaland West:". $data['Mashonaland_West'] . 
-            "\nMasvingo:". $data['Masvingo'] .
-            "\nMatabeleland North:". $data['Matabeleland_North'] .
-            "\nMatabeleland South:". $data['Matabeleland_South'] .
-            "\nMidlands:". $data['Midlands'] .
-            "<br> \n Follow the directions of your local health authority.
-            Avoiding unneeded visits to medical facilities allows healthcare systems to operate more effectively, therefore protecting you and others.\n#COVID19 #HealthyAtHome";
+            \nBulawayo: ". json_decode($jsonobj)['0']->Bulawayo.
+            "\nHarare: ". json_decode($jsonobj)['0']->Harare .
+            "\nManicaland: ". json_decode($jsonobj)['0']->Manicaland .
+            "\nMashonaland Central: ". json_decode($jsonobj)['0']->Mashonaland_Central .
+            "\nMashonaland East: ". json_decode($jsonobj)['0']->Mashonaland_East .
+            "\nMashonaland West: ". json_decode($jsonobj)['0']->Mashonaland_West . 
+            "\nMasvingo: ". json_decode($jsonobj)['0']->Masvingo .
+            "\nMatabeleland North: ". json_decode($jsonobj)['0']->Matabeleland_North .
+            "\nMatabeleland South: ". json_decode($jsonobj)['0']->Matabeleland_South .
+            "\nMidlands: ". json_decode($jsonobj)['0']->Midlands .
+            "\n\n Follow the directions of your local health authority.\nAvoiding unneeded visits to medical facilities allows healthcare systems to operate more effectively, therefore protecting you and others.\n#COVID19 #HealthyAtHome";
          break;
       case 7:
          $string = "COVID-19 Update Summary:
-            \nTotal Tests:". $data['TotalTests'] .
-            "\nPositive Cases:". $data['PositiveCases'] .
-            "\nNegative Cases:". $data['NegativeCases'] .
-            "\nDeaths:". $data['Deaths'] .
-            "\nICU:". $data['ICU'] .
-            "\nAverage Age:". $data['AverageAge'] . 
-            "\nMedian Age:". $data['MedianAge'] .
-            "\nMinimum Age:". $data['MinimumAge'] .
-            "\nMaximum Age:". $data['MaximumAge'] .
-            "<br> \nTip: COVER your cough. Cover your nose and mouth with your bent elbow or a tissue when you cough or sneeze.\n#COVID19 #HealthyAtHome";
+            \nTotal Tests: ". json_decode($jsonobj)['0']->TotalTests .
+            "\nPositive Cases: ". json_decode($jsonobj)['0']->PositiveCases .
+            "\nNegative Cases: ". json_decode($jsonobj)['0']->NegativeCases .
+            "\nDeaths: ". json_decode($jsonobj)['0']->Deaths .
+            "\nICU: ". json_decode($jsonobj)['0']->ICU .
+            "\nAverage Age: ". json_decode($jsonobj)['0']->AverageAge . 
+            "\nMedian Age: ". json_decode($jsonobj)['0']->MedianAge .
+            "\nMinimum Age: ". json_decode($jsonobj)['0']->MinimumAge .
+            "\nMaximum Age: ". json_decode($jsonobj)['0']->MaximumAge .
+            "\n\nTip: COVER your cough. Cover your nose and mouth with your bent elbow or a tissue when you cough or sneeze.\n#COVID19 #HealthyAtHome";
          break;
       case 8:
-         foreach ($data as $key => $value) {
-            $string = "Zimbabwe COVID-19 positive cases: 
-             \nCase Number:". $value['caseId'] .
-            "\nAge:" . $value['age'] .
-            "\nGender:" . $value['gender'] .
-            "\nCity:" . $value['city'] .
-            "\nAge:" . $value['age'] .
-            "\nDate Confirmed:" . $value['dateConfirmation'] .
-            "\nTravel History:" . $value['travelHistoryLocation'] .
-            "<br> \nTIP: When you wear a mask wear it the right way. If you have a fever, a cough, and difficulty breathing, seek medical attention. Call in advance. #covid19 #HealthyAtHome";
-            ;
+         $string .= "Zimbabwe COVID-19 positive cases:";
+         foreach (json_decode($jsonobj) as $value) {
+            
+            $string .= " 
+             \nCase Number:". $value->caseId.
+            "\nAge:" . $value->age .
+            "\nGender:" . $value->gender .
+            "\nCity:" . $value->city .
+            "\nAge:" . $value->age .
+            "\nDate Confirmed:" . $value->dateConfirmation .
+            "\nTravel History:" . $value->travelHistoryLocation;
+            
+            if($value->caseId===15)
+               break;
+            
           }
+          
+          $string.="\n\nTIP: When you wear a mask wear it the right way. If you have a fever, a cough, and difficulty breathing, seek medical attention. Call in advance. #covid19 #HealthyAtHome";
          break;
       case 9:
          $todays_data = end($data);
