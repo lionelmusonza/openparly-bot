@@ -84,4 +84,11 @@ function DecodeDataAPI($id,$jsonobj){}
 
 
 //shortList for counselling
-function counsellor(){}
+function allocateCounsellor($counselorRequest){
+   $number = array("1","2","3","4","5","6","7","8"); 
+   $length = count($number);
+   $number[$length] = $number[0];
+   $availableCounselor = $number[0];
+   array_shift($number);
+   return $availableCounselor;
+}
