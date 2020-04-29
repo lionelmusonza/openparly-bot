@@ -25,7 +25,7 @@ switch ($msg) {
        $response->message(allocateCounsellor(trim($_REQUEST['From'],"whatsapp:+"),$conn));
        break;
    case 4:
-       $response->message('1. STAY home as much as you can.\n 2. KEEP a safe distance.\n 3. WASH hands often.\n 4. COVER your cough.\n 5. SICK? Call ahead.');
+       $response->message("1. STAY home as much as you can.\n 2. KEEP a safe distance.\n 3. WASH hands often.\n 4. COVER your cough.\n 5. SICK? Call ahead.");
        break;
    case 5:
        $z = requestDataAPI('sexUpdate');
