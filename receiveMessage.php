@@ -42,13 +42,13 @@ switch ($msg) {
        $response->message(DecodeDataAPI(8,requestDataAPI('apicase')));
        break;
    case 9:
-       $response->message(requestDataAPI('apiday'));
+       $response->message(DecodeDataAPI(9,requestDataAPI('apiday')));
        break;
    case 10:
          $response->message("National emergency response Hotline: 08002000");
          break;
    case 11:
-       $response->message(requestDataAPI('transmissionUpdate'));
+       $response->message(DecodeDataAPI(11,requestDataAPI('transmissionUpdate')));
        break;
   
    default:
@@ -120,7 +120,7 @@ function DecodeDataAPI($id,$jsonobj){
          # code...
          break;
       case 5:
-         $string = "Gender Breakdown of Cases:\nMales:". json_decode($jsonobj)['0']->male ."\nFemales:". json_decode($jsonobj)['0']->female;
+         $string = "Gender Breakdown of Cases:\nMales: ". json_decode($jsonobj)['0']->male ."\nFemales: ". json_decode($jsonobj)['0']->female;
          break;
       case 6:
          $string = "COVID-19 cases at Provincial Level:
@@ -150,41 +150,43 @@ function DecodeDataAPI($id,$jsonobj){
             "\n\nTip: COVER your cough. Cover your nose and mouth with your bent elbow or a tissue when you cough or sneeze.\n#COVID19 #HealthyAtHome";
          break;
       case 8:
-         $string .= "Zimbabwe COVID-19 positive cases:";
+         $string = "Zimbabwe COVID-19 positive cases:";
          foreach (json_decode($jsonobj) as $value) {
             
             $string .= " 
-             \nCase Number:". $value->caseId.
-            "\nAge:" . $value->age .
-            "\nGender:" . $value->gender .
-            "\nCity:" . $value->city .
-            "\nDate Confirmed:" . $value->dateConfirmation .
-            "\nTravel History:" . $value->travelHistoryLocation;
+             \nCase Number: ". $value->caseId.
+            "\nAge: " . $value->age .
+            "\nGender: " . $value->gender .
+            "\nCity: " . $value->city .
+            "\nDate Confirmed: " . $value->dateConfirmation .
+            "\nTravel History: " . $value->travelHistoryLocation;
             
             if($value->caseId===10)
                break;
             
           }
           
-          $string.="\n\nTIP: When you wear a mask wear it the right way. If you have a fever, a cough, and difficulty breathing, seek medical attention. Call in advance. #covid19 #HealthyAtHome";
+          $string.="\n\n*SOME INFO REDACTED DUE TO LIMITED DEMO APIs*\n\nTIP: When you wear a mask wear it the right way. If you have a fever, a cough, and difficulty breathing, seek medical attention. Call in advance. #covid19 #HealthyAtHome";
          break;
       case 9:
-         $todays_data = end($data);
-         $string = "Zimbabwe Daily COVID-19 Statistics:
-         \nCummilative Country Total Cases:". $todays_data['CMTTOTAL'] .
-         "\nCountry Total Tested:". $todays_data['TOTALTS'] .
-         "\nCountry Total Positive Tests:". $todays_data['TOTALPSTV'] .
-         "\nCountry Total Positive ReTests:". $todays_data['TOTALPSTVRETES'] .
-         "\nCountry Total Deaths:". $todays_data['TOTALDEAD'] .
-         "\nCountry Total in ICU:". $todays_data['TOTALICU'] .
-         "\nCountry Total recovered:". $todays_data['TOTALRCVD'] .
-         "<br>\nTIP: KEEP a safe distance. Maintain a safe distance from anyone who is coughing or sneezing. \n#COVID19 #HealthyAtHome";
+         $da = json_decode($jsonobj);
+         $todays_data = end($da);
+         $dt = date('Y-m-d', strtotime($todays_data->Date));
+         $string = "Zimbabwe  COVID-19 Statistics As At: ".$dt.":
+         \nCummilative Country Total Cases: ". $todays_data->CMTTOTAL .
+         "\nCountry Total Tested: ". $todays_data->TOTALTS .
+         "\nCountry Total Positive Tests: ". $todays_data->TOTALPSTV .
+         "\nCountry Total Positive ReTests: ". $todays_data->TOTALPSTVRETES .
+         "\nCountry Total Deaths: ". $todays_data->TOTALDEAD .
+         "\nCountry Total in ICU: ". $todays_data->TOTALICU .
+         "\nCountry Total recovered: ". $todays_data->TOTALRCVD .
+         "\n\nTIP: KEEP a safe distance. Maintain a safe distance from anyone who is coughing or sneezing. \n#COVID19 #HealthyAtHome";
          break;
       case 11:
-         $string = "Zimbabwe Daily COVID-19 Modes of Transmission:
-         \nTravel:". $data['travel'] . 
-         "\nLocal:". $data['local'] .
-         "<br> \n WASH hands often. Clean your hands often. Use soap and water, or an alcohol-based hand rub. \n#COVID19 #HealthyAtHome";
+         $string = " COVID-19 Modes of Transmission:
+         \nTravel:  ". json_decode($jsonobj)['0']->travel . 
+         "\nLocal:  ". json_decode($jsonobj)['0']->local.
+         "\n\n WASH hands often. Clean your hands often. Use soap and water, or an alcohol-based hand rub. \n#COVID19 #HealthyAtHome";
          break;
       default:
         $string = "ALERT! \nPlease select a valid option";
