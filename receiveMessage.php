@@ -28,7 +28,7 @@ switch ($msg) {
        $response->message(requestDataAPI($uri));
        break;
    case 5:
-       $response->message(requestDataAPI('sexUpdate'));
+       $response->message(DecodeDataAPI(5,requestDataAPI('sexUpdate')));
        break;
    case 6:
        $response->message(requestDataAPI('CasesProvince'));
@@ -72,10 +72,6 @@ function requestDataAPI($uri){
 
 }
 
-//make data from openparly api readable
-function DecodeDataAPI($id,$jsonobj){}
-
-
 //shortList for counselling
 function allocateCounsellor($wanum,$conn){
    $waNumber = $wanum;
@@ -107,4 +103,87 @@ function allocateCounsellor($wanum,$conn){
    //$conn->close();
    
    return $resp;
+}
+
+ //make data from openparly api readable
+function DecodeDataAPI($id,$jsonobj){
+   $data = json_decode($jsonobj, true);
+
+   switch ($id) {
+   
+      case 3:
+         # code...
+         break;
+      case 4:
+         # code...
+         break;
+      case 5:
+         $string = "Gender Breakdown of Cases:\nMales:". $data['male'] ."\nFemales:". $data['female'];
+         break;
+      case 6:
+         $string = "COVID-19 cases at Provincial Level:
+            \nBulawayo:". $data['Bulawayo'] .
+            "\nHarare:". $data['Harare'] .
+            "\nManicaland:". $data['Manicaland'] .
+            "\nMashonaland Central:". $data['Mashonaland_Central'] .
+            "\nMashonaland East:". $data['Mashonaland_East'] .
+            "\nMashonaland West:". $data['Mashonaland_West'] . 
+            "\nMasvingo:". $data['Masvingo'] .
+            "\nMatabeleland North:". $data['Matabeleland_North'] .
+            "\nMatabeleland South:". $data['Matabeleland_South'] .
+            "\nMidlands:". $data['Midlands'] .
+            "<br> \n Follow the directions of your local health authority.
+            Avoiding unneeded visits to medical facilities allows healthcare systems to operate more effectively, therefore protecting you and others.\n#COVID19 #HealthyAtHome";
+         break;
+      case 7:
+         $string = "COVID-19 Update Summary:
+            \nTotal Tests:". $data['TotalTests'] .
+            "\nPositive Cases:". $data['PositiveCases'] .
+            "\nNegative Cases:". $data['NegativeCases'] .
+            "\nDeaths:". $data['Deaths'] .
+            "\nICU:". $data['ICU'] .
+            "\nAverage Age:". $data['AverageAge'] . 
+            "\nMedian Age:". $data['MedianAge'] .
+            "\nMinimum Age:". $data['MinimumAge'] .
+            "\nMaximum Age:". $data['MaximumAge'] .
+            "<br> \nTip: COVER your cough. Cover your nose and mouth with your bent elbow or a tissue when you cough or sneeze.\n#COVID19 #HealthyAtHome";
+         break;
+      case 8:
+         foreach ($data as $key => $value) {
+            $string = "Zimbabwe COVID-19 positive cases: 
+             \nCase Number:". $value['caseId'] .
+            "\nAge:" . $value['age'] .
+            "\nGender:" . $value['gender'] .
+            "\nCity:" . $value['city'] .
+            "\nAge:" . $value['age'] .
+            "\nDate Confirmed:" . $value['dateConfirmation'] .
+            "\nTravel History:" . $value['travelHistoryLocation'] .
+            "<br> \nTIP: When you wear a mask wear it the right way. If you have a fever, a cough, and difficulty breathing, seek medical attention. Call in advance. #covid19 #HealthyAtHome";
+            ;
+          }
+         break;
+      case 9:
+         $todays_data = end($data);
+         $string = "Zimbabwe Daily COVID-19 Statistics:
+         \nCummilative Country Total Cases:". $todays_data['CMTTOTAL'] .
+         "\nCountry Total Tested:". $todays_data['TOTALTS'] .
+         "\nCountry Total Positive Tests:". $todays_data['TOTALPSTV'] .
+         "\nCountry Total Positive ReTests:". $todays_data['TOTALPSTVRETES'] .
+         "\nCountry Total Deaths:". $todays_data['TOTALDEAD'] .
+         "\nCountry Total in ICU:". $todays_data['TOTALICU'] .
+         "\nCountry Total recovered:". $todays_data['TOTALRCVD'] .
+         "<br>\nTIP: KEEP a safe distance. Maintain a safe distance from anyone who is coughing or sneezing. \n#COVID19 #HealthyAtHome";
+         break;
+      case 11:
+         $string = "Zimbabwe Daily COVID-19 Modes of Transmission:
+         \nTravel:". $data['travel'] . 
+         "\nLocal:". $data['local'] .
+         "<br> \n WASH hands often. Clean your hands often. Use soap and water, or an alcohol-based hand rub. \n#COVID19 #HealthyAtHome";
+         break;
+      default:
+        $string = "ALERT! \nPlease select a valid option";
+         break;
+   }
+
+   return $string;
 }
