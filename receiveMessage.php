@@ -58,11 +58,28 @@ function DecodeDataAPI($jsonobj){}
 
 //shortList for counselling
 function allocateCounsellor($counselorRequest){
-   $number = array("1","2","3","4","5","6","7","8"); 
-   $length = count($number);
-   $number[$length] = $number[0];
-   $availableCounselor = $number[0];
-   array_shift($number);
-   return $availableCounselor;
+   $serverName = "db4free.net:3306";
+   $username = "nyaradzo";
+   $password = "defaultnyaradzopassword";
+   $dbname = "nyaradzo";
+   $waNumber = getenv('MY_WHATSAPP_NUMBER');
+   $chatID = rand(8000,324094230);
+   $conn = new mysqli($serverName, $username, $password, $dbname);
+   // Check connection
+   if ($conn->connect_error) {
+      die("Connection failed: " . $conn->connect_error);
+   }
+
+   $sql = "INSERT INTO todos(phone,chatID)
+   VALUES ($waNumber, $chatID)";
+
+   if ($conn->query($sql) === TRUE) {
+      echo "New record created successfully";
+   } else {
+      echo "Error: " . $sql . "<br>" . $conn->error;
+   }
+
+   $conn->close();
+   return $chatID;
 }
 
