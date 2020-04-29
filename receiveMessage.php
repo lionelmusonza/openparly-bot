@@ -161,7 +161,7 @@ function DecodeDataAPI($id,$jsonobj){
             "\nDate Confirmed:" . $value->dateConfirmation .
             "\nTravel History:" . $value->travelHistoryLocation;
             
-            if($value->caseId===13)
+            if($value->caseId===10)
                break;
             
           }
