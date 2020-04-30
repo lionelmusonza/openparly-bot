@@ -29,7 +29,7 @@
                                                 </form>
                                                 
                                             </td>
-                                            <td><a href="{{ url('https://wa.me/{{ $todo->phone }}?text=You%20recently%20requested%20for%20a%20counselling%20session%20during%20these%20trying%20times.%20Please%20enter%20your%20verification%20code%20to%20proceed.') }}">Visit Google</a></td>
+                                            <td><a href='{{ url("https://wa.me/{{ $todo->phone }}?text=You%20recently%20requested%20for%20a%20counselling%20session%20during%20these%20trying%20times.%20Please%20enter%20your%20verification%20code%20to%20proceed.") }}'>Visit Google</a></td>
                                             </tr>
                                     @endforeach
                                 </tbody>
