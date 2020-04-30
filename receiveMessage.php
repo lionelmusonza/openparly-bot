@@ -53,7 +53,7 @@ switch ($msg) {
   
    default:
    $response->message("Correct information is critical. This service provides the official and up to date information on the status of COVID-19 in Zimbabwe from the OpenParly.
-   \nReply with one of the numbers corresponding to a topic in the list below to get the correct information on the topic:\n\n 1. Symptoms.\n 2. Myths.\n 3. Need  Conselling?\n 4. Precautions/Preventative Measures.\n 5. Gender Breakdown of Cases.\n 6. Cases by Provinces.\n 7. Update Summary.\n 8. Positive Cases.\n 9. Daily Stats.\n 10.Contact Rapid Response Team.\n 11.Mode of Transmission.\nShare this service ➡️");
+   \nReply with one of the numbers corresponding to a topic in the list below to get the correct information on the topic:\n\n 1. Symptoms.\n 2. Myths.\n 3. Need  Counselling?(Mental Health)\n 4. Precautions/Preventative Measures.\n 5. Gender Breakdown of Cases.\n 6. Cases by Provinces.\n 7. Update Summary.\n 8. Positive Cases.\n 9. Daily Stats.\n 10.Contact Rapid Response Team.\n 11.Mode of Transmission.\nShare this service ➡️");
 
    
 
@@ -140,7 +140,7 @@ function DecodeDataAPI($id,$jsonobj){
          $string = "COVID-19 Update Summary:
             \nTotal Tests: ". json_decode($jsonobj)['0']->TotalTests .
             "\nPositive Cases: ". json_decode($jsonobj)['0']->PositiveCases .
-            "\nNegative Cases: ". json_decode($jsonobj)['0']->NegativeCases .
+            "\nNegative Cases: ". json_decode($jsonobj)['0']->NegativeTests .
             "\nDeaths: ". json_decode($jsonobj)['0']->Deaths .
             "\nICU: ". json_decode($jsonobj)['0']->ICU .
             "\nAverage Age: ". json_decode($jsonobj)['0']->AverageAge . 
