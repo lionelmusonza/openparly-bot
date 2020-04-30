@@ -29,6 +29,7 @@
                                                 </form>
                                                 
                                             </td>
+                                            <td><a href="{{ url('/') }}">Visit Google</a></td>
                                             </tr>
                                     @endforeach
                                 </tbody>
