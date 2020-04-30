@@ -14,6 +14,7 @@
                                         <th>Contact</th>
                                         <th>Chat id</th>
                                         <th>Confirm</th>
+                                        <th>Whatsapp</th>
                                     </tr>
                                 </thead>
                                 <tbody>
